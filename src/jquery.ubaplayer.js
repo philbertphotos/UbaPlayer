@@ -1,3 +1,5 @@
+/*! UbaPlayer - v2.0.2 -  * https://brianhadaway.github.io/UbaPlayer
+ * Copyright (c)  2014  Brian Hadaway; Licensed MIT */
 (function($, window, document, undefined) {
     var UbaPlayer = function(elem, options) {
         this.$elem = $(elem);
@@ -9,6 +11,7 @@
         defaults: {
             audioButtonClass: 'ubaplayer-button',
             autoPlay: null,
+            autoStart: false, //jp
             codecs: [{
                 name: 'OGG',
                 codec: 'audio/ogg; codecs="vorbis"'
@@ -85,6 +88,18 @@
                     this.play(this.options.autoPlay);
                 }
             }
+
+            if (this.options.autoStart) { //jp
+                g = $('.ubaplayer-autoStart').each(function() {
+                    var href = $(this).attr('href');
+                    //console.log('autostart ' + href);
+                    return href;
+                });
+				//console.log('autostart ' +JSON.stringify(g));
+				if (g.length !== 0) {
+					this.play(g);
+				}
+            }
         },
 
         pause: function() {
@@ -132,6 +147,7 @@
                 this.audio.volume = this.options.volume;
                 this.audio.src = this.currentTrack + this.options.extension;
                 this.audio.play();
+                //this.audio.autoStart = this.options.autoStart; //jp
             }
         },
 
@@ -154,6 +170,7 @@
         },
 
         updateTrackState: function(evt) {
+
             this.$tgt = $(evt.target);
             if (!this.$tgt.hasClass(this.options.audioButtonClass)) {
                 return;
@@ -208,10 +225,10 @@
             }
 
             if (this.options.continuous) {
-                var $next = this.$tgt.next().length ? this.$tgt.next() : $(this.options.audioButtonClass).eq(0);
+                //var $next = this.$tgt.next().length ? this.$tgt.next() : $(this.options.audioButtonClass).eq(0);
+                var $next = this.$tgt; //.next().length ? this.$tgt.next() : $(this.options.audioButtonClass).eq(0);
                 this.play($next);
             }
-
         },
 
         canPlay: function(type) {
