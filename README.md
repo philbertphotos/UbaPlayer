@@ -23,6 +23,8 @@ In your web page:
 <div id="ubaplayer"></div>
 <ul class="ubaplayer-controls">
     <li><a class="ubaplayer-button" href="media/foo.mp3">Foo</a></li>
+        <li><a class="ubaplayer-button ubaplayer-autoStart" href="media/foo1.mp3">Foo</a></li>
+        <!--This audio file will start playing on after the page loads -->
 </ul>
 
 <!-- near closing body tag -->
@@ -43,6 +45,7 @@ In your web page:
 defaults: {
     audioButtonClass: 'ubaplayer-button',
     autoPlay: null,
+    autoStart: false,
     codecs: [{
         name: 'OGG',
         codec: 'audio/ogg; codecs="vorbis"'
